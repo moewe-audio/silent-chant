@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MediaPipe Face Tracking</title>
+    <style>
+        .slider-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .slider-label {
+            margin-left: 10px;
+            font-size: 1em;
+            font-family: 'Arial';
+        }
+
+        .bar-container {
+            width: 25rem;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+
+        .bar {
+            height: 100%;
+            width: 0;
+            background-color: #76c7c0;
+            transition: width 0.1s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <video id="webcam" autoplay playsinline width="640" height="480" style="transform: rotateY(180deg);
+        -webkit-transform:rotateY(180deg);
+        -moz-transform:rotateY(180deg);">
+    </video>
+    <canvas class="output_canvas" id="output_canvas"></canvas>
+    <div class="slider-container">
+        <div class="bar-container" data-bar-id="openValue">
+            <div class="bar"></div>
+        </div>
+        <span class="slider-label">Is the mouth open?</span>
+    </div>
+    <div class="slider-container">
+        <div class="bar-container" data-bar-id="stretchValue">
+            <div class="bar"></div>
+        </div>
+        <span class="slider-label">Width</span>
+    </div>
+    <div class="slider-container">
+        <div class="bar-container" data-bar-id="lipThickness">
+            <div class="bar"></div>
+        </div>
+        <span class="slider-label">Lip thickness</span>
+    </div>
+    <script src="bundle.js"></script>
+</body>
+
+</html>
