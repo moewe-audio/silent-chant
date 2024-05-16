@@ -88,15 +88,36 @@
             margin-left: 0;
             display: flex;
             justify-content: center;
+            align-items: start;
+            align-self: flex-start;
+            flex-direction: column;
             align-items: center;
             border-radius: 7px;
-            /* background-color: rgba(193, 77, 197, 40%); */
         }
 
         .vowel-label {
             font-size: 3em;
             text-align: center;
             font-family: 'Arial';
+        }
+
+        .capture-link {
+            display: inline-block;
+            padding: 5px 10px;
+            color: #ffffff;
+            background: rgba(227, 224, 224, 34%);
+            color: rgb(230, 13, 13);
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: auto;
+            margin-top: 0;
+        }
+
+        .capture-link:hover {
+            background: rgba(227, 224, 224, 73%);
         }
     </style>
 </head>
@@ -130,18 +151,23 @@
             <div class="hbox">
                 <div class="vowel-card" data-vowel-id="0">
                     <span class="vowel-label">&#97;</span>
+                    <button type="button" id="captureButton" class="capture-link">Capture</a>
                 </div>
                 <div class="vowel-card" data-vowel-id="1">
                     <span class="vowel-label">&#603;</span>
+                    <button type="button" id="captureButton" class="capture-link">Capture</a>
                 </div>
                 <div class="vowel-card" data-vowel-id="2">
                     <span class="vowel-label">&#105;</span>
+                    <button type="button" id="captureButton" class="capture-link">Capture</a>
                 </div>
                 <div class="vowel-card" data-vowel-id="3">
                     <span class="vowel-label">&#111;</span>
+                    <button type="button" id="captureButton" class="capture-link">Capture</a>
                 </div>
                 <div class="vowel-card" data-vowel-id="4">
                     <span class="vowel-label">&#117;</span>
+                    <button type="button" id="captureButton" class="capture-link">Capture</a>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import { ProcessingResult, lastResult } from "./processor";
+import { updateRangeIndicator } from "./ui-utils";
 
 export let lastEstimate: number[] = [0, 0, 0, 0, 0]
 
@@ -7,13 +8,13 @@ interface Range {
     upper: number
 }
 
-interface EstimatorRange {
+export interface EstimatorRange {
     openRange: Range,
     stretchRange: Range,
     lipThicknessRange: Range
 }
 
-export const RANGES: EstimatorRange[] = [
+export let RANGES: EstimatorRange[] = [
     {
         openRange: { lower: 0.2, upper: 2 },
         stretchRange: { lower: 1, upper: 1.3 },
@@ -53,6 +54,13 @@ export function estimateVowels(procResult: ProcessingResult): number[] {
         return (avg / 3.0) * mouthSufficientlyOpened(procResult.openessEstimate, range.openRange);
     });
     return lastEstimate;
+}
+
+export function updateVowelRanges(vowelId: number, ranges: EstimatorRange) {
+    RANGES[vowelId] = ranges;
+    updateRangeIndicator('openValue', ranges.openRange.lower, ranges.openRange.upper, vowelId);
+    updateRangeIndicator('stretchValue', ranges.stretchRange.lower, ranges.stretchRange.upper, vowelId);
+    updateRangeIndicator('lipThickness', ranges.lipThicknessRange.lower, ranges.lipThicknessRange.upper, vowelId);
 }
 
 function inRange(value: number, range: Range): number {
