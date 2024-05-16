@@ -5,6 +5,7 @@ import { process, lastResult } from './processor';
 import { init, updateUi } from './ui-utils';
 import { estimateVowel } from './vowel-estimate'
 import { initCalibrationUi } from './calibration-ui';
+import { initAudio } from './dsp/audio-processor';
 
 const videoElement = document.getElementById('webcam') as HTMLVideoElement;
 const canvasElement = document.getElementById(
@@ -46,6 +47,7 @@ camera.start();
 setTimeout(() => {
     init();
     initCalibrationUi();
+    initAudio();
     setInterval(updateUi, 100);
     setInterval(() => drawLipModel(lastResult, canvasCtx, canvasElement), 30);
 }, 2000);

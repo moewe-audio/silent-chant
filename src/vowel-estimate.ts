@@ -1,7 +1,12 @@
 import { ProcessingResult, lastResult } from "./processor";
 import { updateRangeIndicator } from "./ui-utils";
 
-export let lastEstimate: number[] = [0, 0, 0, 0, 0]
+export interface VowelResult {
+    vowelScores: number[],
+    vowelParam: number
+}
+
+export let lastEstimate: VowelResult = { vowelScores: [0, 0, 0, 0, 0], vowelParam: 0 }
 
 interface Range {
     lower: number,
@@ -45,16 +50,16 @@ export let RANGES: EstimatorRange[] = [
     },
     {
         openRange: {
-            lower: -0.1616341584881257,
-            upper: 0.49369203087585567
+            lower: -0.1752421529659962,
+            upper: 0.9862800426986744
         },
         stretchRange: {
-            lower: 1.1312612227616774,
-            upper: 1.831251352498779
+            lower: 1.1046750728736863,
+            upper: 2.316702695618096
         },
         circularityRatio: {
-            lower: 0.25852472308422597,
-            upper: 0.6344181275984813
+            lower: 0.06321607350171088,
+            upper: 0.6675608334506203
         }
     },
     {
@@ -108,9 +113,14 @@ function calculateScore(range: EstimatorRange, weights: { open: number, stretch:
     return 1 - weightedAvg;
 }
 
-export function estimateVowel(): number[] {
+export function estimateVowel(): VowelResult {
     const weights = { open: 0.6, stretch: 1, circularity: 1.6 };
-    lastEstimate = RANGES.map(range => calculateScore(range, weights));
+    const scores = RANGES.map(range => calculateScore(range, weights));
+    let finalScore = calculateFinalScore(scores);
+    lastEstimate = {
+        vowelScores: scores,
+        vowelParam: 1 / (1 + Math.exp(-8 * (finalScore - 0.2))) //sigmoid-like
+    };
     return lastEstimate;
 }
 
@@ -119,4 +129,25 @@ export function updateVowelRanges(vowelId: number, ranges: EstimatorRange) {
     updateRangeIndicator('openValue', ranges.openRange.lower, ranges.openRange.upper, vowelId);
     updateRangeIndicator('stretchValue', ranges.stretchRange.lower, ranges.stretchRange.upper, vowelId);
     updateRangeIndicator('circularityRatio', ranges.circularityRatio.lower, ranges.circularityRatio.upper, vowelId);
+}
+
+function normalizeScores(scores: number[]): number[] {
+    const sum = scores.reduce((a, b) => a + b, 0);
+    return scores.map(score => score / sum);
+}
+
+function calculateFinalScore(scores: number[]): number {
+    const normalizedScores = normalizeScores(scores);
+    const numVowels = RANGES.length;
+    const segmentLength = 1.0 / (numVowels - 1);
+    const maxIndex = normalizedScores.indexOf(Math.max(...normalizedScores));
+    const maxScore = normalizedScores[maxIndex];
+    let parameter = maxIndex * segmentLength * maxScore;;
+    if (maxIndex > 0) {
+        parameter += (maxIndex - 1) * segmentLength * normalizedScores[maxIndex - 1] * (1 - maxScore);
+    }
+    if (maxIndex < numVowels - 1) {
+        parameter += (maxIndex + 1) * segmentLength * normalizedScores[maxIndex + 1] * (1 - maxScore);
+    }
+    return parameter;
 }

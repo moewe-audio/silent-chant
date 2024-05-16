@@ -101,6 +101,13 @@
             font-family: 'Arial';
         }
 
+        .vowel-sub-label {
+            font-size: 0.7em;
+            text-align: start;
+            color: rgb(89, 89, 89);
+            font-family: 'Arial';
+        }
+
         .capture-link {
             display: inline-block;
             padding: 5px 10px;
@@ -151,6 +158,7 @@
             <div class="hbox">
                 <div class="vowel-card" data-vowel-id="0">
                     <span class="vowel-label">&#97;</span>
+                    <span class="vowel-sub-label">example: father</span>
                     <button type="button" id="captureButton" class="capture-link">Capture</a>
                 </div>
                 <div class="vowel-card" data-vowel-id="1">
@@ -169,6 +177,12 @@
                     <span class="vowel-label">&#117;</span>
                     <button type="button" id="captureButton" class="capture-link">Capture</a>
                 </div>
+            </div>
+            <div class="slider-container">
+                <div class="bar-container" data-bar-id="vowelParam">
+                    <div class="bar"></div>
+                </div>
+                <span class="slider-label">Vowel Parameter</span>
             </div>
         </div>
     </div>

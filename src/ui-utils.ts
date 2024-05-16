@@ -4,7 +4,8 @@ import { RANGES, lastEstimate } from "./vowel-estimate";
 const SCALERS = new Map<string, number>([
     ["openValue", 50],
     ["stretchValue", 50],
-    ["circularityRatio", 50]
+    ["circularityRatio", 50],
+    ["vowelParam", 100],
 ]);
 
 const VOWEL_COLORS = [
@@ -32,10 +33,11 @@ export function updateBar() {
     updateSliderValue("openValue", lastResult.openessEstimate);
     updateSliderValue("stretchValue", lastResult.width);
     updateSliderValue("circularityRatio", lastResult.circularityRatio);
+    updateSliderValue("vowelParam", lastEstimate.vowelParam);
 }
 
 export function updateCards() {
-    lastEstimate.forEach((est, idx) => {
+    lastEstimate.vowelScores.forEach((est, idx) => {
         updateCardValue(idx, est);
     });
 }
