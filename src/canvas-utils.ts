@@ -4,7 +4,6 @@ import { ProcessingResult } from "./processor";
 const scalingFactor = 50;
 
 export const drawLipModel = (procResult: ProcessingResult, ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
-    // if (!procResult.landmarks || !procResult.landmarks.lipsUpperOuter) return;
     const landmarks: LipLandmarks = procResult.landmarks;
     if (!landmarks.lipsLowerInner) return;
     const centerX = canvas.width / 2;
