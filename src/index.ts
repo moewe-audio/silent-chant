@@ -2,7 +2,8 @@ import { FaceMesh } from '@mediapipe/face_mesh';
 import { Camera } from '@mediapipe/camera_utils';
 import { drawLipModel } from './canvas-utils';
 import { process, lastResult } from './processor';
-import { updateBar } from './ui-utils';
+import { init, updateUi } from './ui-utils';
+import { estimateVowels } from './vowel-estimate'
 
 const videoElement = document.getElementById('webcam') as HTMLVideoElement;
 const canvasElement = document.getElementById(
@@ -14,6 +15,7 @@ function onResults(results: any) {
     if (results.multiFaceLandmarks) {
         results.multiFaceLandmarks.forEach((landmarks: any) => {
             process(landmarks);
+            estimateVowels(lastResult);
         });
     }
 }
@@ -41,6 +43,7 @@ const camera = new Camera(videoElement, {
 
 camera.start();
 setTimeout(() => {
-    setInterval(updateBar, 100);
+    init();
+    setInterval(updateUi, 100);
     setInterval(() => drawLipModel(lastResult, canvasCtx, canvasElement), 30);
 }, 2000);
