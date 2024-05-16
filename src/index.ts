@@ -3,7 +3,7 @@ import { Camera } from '@mediapipe/camera_utils';
 import { drawLipModel } from './canvas-utils';
 import { process, lastResult } from './processor';
 import { init, updateUi } from './ui-utils';
-import { estimateVowels } from './vowel-estimate'
+import { estimateVowel } from './vowel-estimate'
 import { initCalibrationUi } from './calibration-ui';
 
 const videoElement = document.getElementById('webcam') as HTMLVideoElement;
@@ -16,7 +16,7 @@ function onResults(results: any) {
     if (results.multiFaceLandmarks) {
         results.multiFaceLandmarks.forEach((landmarks: any) => {
             process(landmarks);
-            estimateVowels(lastResult);
+            estimateVowel();
         });
     }
 }

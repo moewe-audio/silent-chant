@@ -16,22 +16,22 @@ export function startCalibration(id: number) {
 function calculateEstimateRanges() {
     const openValues = resultSamples.map(r => r.openessEstimate);
     const widthValues = resultSamples.map(r => r.width);
-    const lipThicknessValues = resultSamples.map(r => r.lipThickness);
-    const [devOpen, avgOpen] = trimmedStandardDeviation(openValues, 0.1);
-    const [devWidth, avgWidth] = trimmedStandardDeviation(widthValues, 0.1);
-    const [devLipThickness, avgLipThickness] = trimmedStandardDeviation(lipThicknessValues, 0.1);
+    const circularityValues = resultSamples.map(r => r.circularityRatio);
+    const [devOpen, avgOpen] = trimmedStandardDeviation(openValues, 0);
+    const [devWidth, avgWidth] = trimmedStandardDeviation(widthValues, 0);
+    const [devCircularity, avgCircularity] = trimmedStandardDeviation(circularityValues, 0.1);
     updateVowelRanges(vowelId, {
         openRange: {
-            lower: avgOpen - devOpen,
-            upper: avgOpen + devOpen
+            lower: avgOpen - devOpen * 2,
+            upper: avgOpen + devOpen * 2
         },
         stretchRange: {
-            lower: avgWidth - devWidth,
-            upper: avgWidth + devWidth
+            lower: avgWidth - devWidth * 2,
+            upper: avgWidth + devWidth * 2,
         },
-        lipThicknessRange: {
-            lower: avgLipThickness - devLipThickness,
-            upper: avgLipThickness + devLipThickness
+        circularityRatio: {
+            lower: avgCircularity - devCircularity * 2,
+            upper: avgCircularity + devCircularity * 2
         },
     })
 }
