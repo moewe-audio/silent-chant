@@ -34,6 +34,22 @@ function calculateEstimateRanges() {
             upper: avgCircularity + devCircularity * 2
         },
     })
+    console.log({
+        item: {
+            openRange: {
+                lower: avgOpen - devOpen * 2,
+                upper: avgOpen + devOpen * 2
+            },
+            stretchRange: {
+                lower: avgWidth - devWidth * 2,
+                upper: avgWidth + devWidth * 2,
+            },
+            circularityRatio: {
+                lower: avgCircularity - devCircularity * 2,
+                upper: avgCircularity + devCircularity * 2
+            },
+        }
+    })
 }
 
 function stopRecording() {

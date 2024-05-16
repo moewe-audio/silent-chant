@@ -16,29 +16,74 @@ export interface EstimatorRange {
 
 export let RANGES: EstimatorRange[] = [
     {
-        openRange: { lower: 0.2, upper: 2 },
-        stretchRange: { lower: 1, upper: 1.3 },
-        circularityRatio: { lower: 0.6, upper: 0.9 },
+        openRange: {
+            lower: 0.007612340872885315,
+            upper: 1.442159134537703
+        },
+        stretchRange: {
+            lower: 1.18918584896638,
+            upper: 1.3798802333625222
+        },
+        circularityRatio: {
+            lower: -0.8272599149026139,
+            upper: 5.927510534496865
+        }
     },
     {
-        openRange: { lower: 0.48, upper: 1.04 },
-        stretchRange: { lower: 1.6, upper: 2 },
-        circularityRatio: { lower: 0.56, upper: 0.78 },
+        openRange: {
+            lower: -0.03936391388901861,
+            upper: 1.2159750353091776
+        },
+        stretchRange: {
+            lower: 1.1531355130296372,
+            upper: 2.1402597318258008
+        },
+        circularityRatio: {
+            lower: -0.1959848158896551,
+            upper: 1.3813795177297885
+        }
     },
     {
-        openRange: { lower: 0.44, upper: 0.9 },
-        stretchRange: { lower: 1.4, upper: 2 },
-        circularityRatio: { lower: 0.48, upper: 0.74 },
+        openRange: {
+            lower: -0.1616341584881257,
+            upper: 0.49369203087585567
+        },
+        stretchRange: {
+            lower: 1.1312612227616774,
+            upper: 1.831251352498779
+        },
+        circularityRatio: {
+            lower: 0.25852472308422597,
+            upper: 0.6344181275984813
+        }
     },
     {
-        openRange: { lower: 0.08, upper: 0.7 },
-        stretchRange: { lower: 0.54, upper: 0.96 },
-        circularityRatio: { lower: 0.68, upper: 1.12 },
+        openRange: {
+            lower: -0.051393795703870995,
+            upper: 0.14425666664430492
+        },
+        stretchRange: {
+            lower: 0.7257906117922185,
+            upper: 1.114468592814084
+        },
+        circularityRatio: {
+            lower: 2.225326612272873,
+            upper: 6.381391372869524
+        }
     },
     {
-        openRange: { lower: 0.02, upper: 0.46 },
-        stretchRange: { lower: 0.58, upper: 0.86 },
-        circularityRatio: { lower: 0.82, upper: 1.02 },
+        openRange: {
+            lower: -0.016171283341344177,
+            upper: 0.09150772113938205
+        },
+        stretchRange: {
+            lower: 0.6884618928280631,
+            upper: 1.1075675839802341
+        },
+        circularityRatio: {
+            lower: -0.2583749549864365,
+            upper: 12.43275432273459
+        }
     }
 ];
 
