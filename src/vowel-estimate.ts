@@ -3,10 +3,11 @@ import { updateRangeIndicator } from "./ui-utils";
 
 export interface VowelResult {
     vowelScores: number[],
-    vowelParam: number
+    vowelParam: number,
+    activation: number,
 }
 
-export let lastEstimate: VowelResult = { vowelScores: [0, 0, 0, 0, 0], vowelParam: 0 }
+export let lastEstimate: VowelResult = { vowelScores: [0, 0, 0, 0, 0], vowelParam: 0, activation: 0 }
 
 interface Range {
     lower: number,
@@ -116,10 +117,13 @@ function calculateScore(range: EstimatorRange, weights: { open: number, stretch:
 export function estimateVowel(): VowelResult {
     const weights = { open: 0.6, stretch: 1, circularity: 1.6 };
     const scores = RANGES.map(range => calculateScore(range, weights));
-    let finalScore = calculateFinalScore(scores);
+    const finalScore = 1 / (1 + Math.exp(-10 * (calculateFinalScore(scores) - 0.198))); //sigmoid-like,
+    const threshold = finalScore >= 0.85 ? 0 : 0.2;
+    const activation = lastResult.openessEstimate >= threshold ? 1 : 0;
     lastEstimate = {
-        vowelScores: scores,
-        vowelParam: 1 / (1 + Math.exp(-8 * (finalScore - 0.2))) //sigmoid-like
+        vowelScores: activation == 1 ? scores : [0, 0, 0, 0, 0],
+        vowelParam: finalScore* activation, 
+        activation: activation
     };
     return lastEstimate;
 }
