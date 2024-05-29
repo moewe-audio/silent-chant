@@ -33,7 +33,7 @@ export function updateBar() {
     updateSliderValue("openValue", lastResult.openessEstimate);
     updateSliderValue("stretchValue", lastResult.width);
     updateSliderValue("circularityRatio", lastResult.circularityRatio);
-    updateSliderValue("vowelParam", lastEstimate.vowelParam);
+    updateSliderValue("vowelParam", lastEstimate.vowelParam / 4);
 }
 
 export function updateCards() {

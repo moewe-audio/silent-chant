@@ -50,7 +50,7 @@ function easeInOutCubic(t: number): number {
     return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 }
 
-function getFormants(index: number, voiceType: number): FormantFilter[] {
+export function getFormants(index: number, voiceType: number): FormantFilter[] {
     switch (index) {
         case 0: return FORMANTS[voiceType].formants.a
         case 1: return FORMANTS[voiceType].formants.e

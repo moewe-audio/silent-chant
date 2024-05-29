@@ -4,10 +4,11 @@ import { updateRangeIndicator } from "./ui-utils";
 export interface VowelResult {
     vowelScores: number[],
     vowelParam: number,
+    vowelMaxScore: number,
     activation: number,
 }
 
-export let lastEstimate: VowelResult = { vowelScores: [0, 0, 0, 0, 0], vowelParam: 0, activation: 0 }
+export let lastEstimate: VowelResult = { vowelScores: [0, 0, 0, 0, 0], vowelParam: 0, activation: 0, vowelMaxScore: 0 }
 
 interface Range {
     lower: number,
@@ -117,13 +118,14 @@ function calculateScore(range: EstimatorRange, weights: { open: number, stretch:
 export function estimateVowel(): VowelResult {
     const weights = { open: 0.6, stretch: 1, circularity: 1.6 };
     const scores = RANGES.map(range => calculateScore(range, weights));
-    const finalScore = 1 / (1 + Math.exp(-10 * (calculateFinalScore(scores) - 0.198))); //sigmoid-like,
+    const finalScore = calculateFinalScore(scores)
     const threshold = finalScore >= 0.85 ? 0 : 0.2;
     const activation = lastResult.openessEstimate >= threshold ? 1 : 0;
     lastEstimate = {
         vowelScores: activation == 1 ? scores : [0, 0, 0, 0, 0],
         vowelParam: finalScore* activation, 
-        activation: activation
+        activation: activation,
+        vowelMaxScore: scores.indexOf(Math.max(...scores))
     };
     return lastEstimate;
 }
@@ -141,17 +143,14 @@ function normalizeScores(scores: number[]): number[] {
 }
 
 function calculateFinalScore(scores: number[]): number {
-    const normalizedScores = normalizeScores(scores);
+    const normalizedScores: number[] = normalizeScores(scores);
     const numVowels = RANGES.length;
-    const segmentLength = 1.0 / (numVowels - 1);
+    const segmentLength = 1;
     const maxIndex = normalizedScores.indexOf(Math.max(...normalizedScores));
     const maxScore = normalizedScores[maxIndex];
-    let parameter = maxIndex * segmentLength * maxScore;;
-    if (maxIndex > 0) {
-        parameter += (maxIndex - 1) * segmentLength * normalizedScores[maxIndex - 1] * (1 - maxScore);
-    }
-    if (maxIndex < numVowels - 1) {
-        parameter += (maxIndex + 1) * segmentLength * normalizedScores[maxIndex + 1] * (1 - maxScore);
-    }
-    return parameter;
+    normalizedScores[maxIndex] = 0;
+    const max2Index = normalizedScores.indexOf(Math.max(...normalizedScores));
+    const max2Score = normalizedScores[max2Index];
+    const scoreDif = maxScore - max2Score;
+    return maxIndex;
 }
