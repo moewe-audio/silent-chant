@@ -17,11 +17,11 @@ const VOWEL_COLORS = [
 ]
 
 export function init() {
-    RANGES.forEach((range, idx) => {
-        addRangeIndicator("openValue", range.openRange.lower, range.openRange.upper, idx);
-        addRangeIndicator("stretchValue", range.stretchRange.lower, range.stretchRange.upper, idx);
-        addRangeIndicator("circularityRatio", range.circularityRatio.lower, range.circularityRatio.upper, idx);
-    })
+    // RANGES.forEach((range, idx) => {
+    //     addRangeIndicator("openValue", range.openRange.lower, range.openRange.upper, idx);
+    //     addRangeIndicator("stretchValue", range.stretchRange.lower, range.stretchRange.upper, idx);
+    //     addRangeIndicator("circularityRatio", range.circularityRatio.lower, range.circularityRatio.upper, idx);
+    // })
 }
 
 export function updateUi() {

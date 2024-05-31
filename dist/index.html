@@ -8,58 +8,68 @@
 
 <body>
     <div class="hbox">
-        <video id="webcam" autoplay playsinline width="640" height="480" style="transform: rotateY(180deg);
+        <div class="group-container">
+            <video id="webcam" autoplay playsinline width="640" height="480" style="transform: rotateY(180deg);
         -webkit-transform:rotateY(180deg);
         -moz-transform:rotateY(180deg);">
-        </video>
-        <div class="vbox">
-            <canvas class="output_canvas" id="output_canvas"></canvas>
-            <div class="slider-container">
-                <div class="bar-container" data-bar-id="openValue">
-                    <div class="bar"></div>
-                </div>
-                <span class="slider-label">Is the mouth open?</span>
+            </video>
+        </div>
+        <div class="group-container">
+            <div class="element">
+                <canvas id="output_canvas"></canvas>
             </div>
-            <div class="slider-container">
-                <div class="bar-container" data-bar-id="stretchValue">
-                    <div class="bar"></div>
+            <div class="element">
+                <div class="slider-container">
+                    <div class="bar-container" data-bar-id="openValue">
+                        <div class="bar"></div>
+                    </div>
+                    <span class="slider-label">Is the mouth open?</span>
                 </div>
-                <span class="slider-label">Width</span>
-            </div>
-            <div class="slider-container">
-                <div class="bar-container" data-bar-id="circularityRatio">
-                    <div class="bar"></div>
+                <div class="slider-container">
+                    <div class="bar-container" data-bar-id="stretchValue">
+                        <div class="bar"></div>
+                    </div>
+                    <span class="slider-label">Width</span>
                 </div>
-                <span class="slider-label">Circularity Ratio</span>
-            </div>
-            <div class="hbox">
-                <div class="vowel-card" data-vowel-id="0">
-                    <span class="vowel-label">&#97;</span>
-                    <span class="vowel-sub-label">example: father</span>
-                    <button type="button" id="captureButton" class="capture-link">Capture</a>
-                </div>
-                <div class="vowel-card" data-vowel-id="1">
-                    <span class="vowel-label">&#603;</span>
-                    <button type="button" id="captureButton" class="capture-link">Capture</a>
-                </div>
-                <div class="vowel-card" data-vowel-id="2">
-                    <span class="vowel-label">&#105;</span>
-                    <button type="button" id="captureButton" class="capture-link">Capture</a>
-                </div>
-                <div class="vowel-card" data-vowel-id="3">
-                    <span class="vowel-label">&#111;</span>
-                    <button type="button" id="captureButton" class="capture-link">Capture</a>
-                </div>
-                <div class="vowel-card" data-vowel-id="4">
-                    <span class="vowel-label">&#117;</span>
-                    <button type="button" id="captureButton" class="capture-link">Capture</a>
+                <div class="slider-container">
+                    <div class="bar-container" data-bar-id="circularityRatio">
+                        <div class="bar"></div>
+                    </div>
+                    <span class="slider-label">Circularity Ratio</span>
                 </div>
             </div>
-            <div class="slider-container">
-                <div class="bar-container" data-bar-id="vowelParam">
-                    <div class="bar"></div>
+            <div class="element">
+                <div class="hbox">
+                    <div class="vowel-card" data-vowel-id="0">
+                        <span class="vowel-label">&#97;</span>
+                        <span class="vowel-sub-label">example: father</span>
+                        <button type="button" id="captureButton" class="capture-link">Capture</a>
+                    </div>
+                    <div class="vowel-card" data-vowel-id="1">
+                        <span class="vowel-label">&#603;</span>
+                        <button type="button" id="captureButton" class="capture-link">Capture</a>
+                    </div>
+                    <div class="vowel-card" data-vowel-id="2">
+                        <span class="vowel-label">&#105;</span>
+                        <button type="button" id="captureButton" class="capture-link">Capture</a>
+                    </div>
+                    <div class="vowel-card" data-vowel-id="3">
+                        <span class="vowel-label">&#111;</span>
+                        <button type="button" id="captureButton" class="capture-link">Capture</a>
+                    </div>
+                    <div class="vowel-card" data-vowel-id="4">
+                        <span class="vowel-label">&#117;</span>
+                        <button type="button" id="captureButton" class="capture-link">Capture</a>
+                    </div>
                 </div>
-                <span class="slider-label">Vowel Parameter</span>
+            </div>
+            <div class="element">
+                <div class="slider-container">
+                    <div class="bar-container" data-bar-id="vowelParam">
+                        <div class="bar"></div>
+                    </div>
+                    <span class="slider-label">Vowel Parameter</span>
+                </div>
             </div>
         </div>
     </div>
