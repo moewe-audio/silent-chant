@@ -6,6 +6,7 @@ import { init, updateUi } from './ui-utils';
 import { estimateVowel } from './vowel-estimate'
 import { initCalibrationUi } from './calibration-ui';
 import { initAudio } from './dsp/audio-processor';
+import './styles.css';
 
 const videoElement = document.getElementById('webcam') as HTMLVideoElement;
 const canvasElement = document.getElementById(
