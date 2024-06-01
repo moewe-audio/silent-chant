@@ -1,4 +1,4 @@
-import { calibrating, startCalibration } from "../calibration";
+import { calibrating, startCalibration } from "../landmark-processing/calibration";
 
 export function initCalibrationUi() {
     for (let i = 0; i < 5; i++) {

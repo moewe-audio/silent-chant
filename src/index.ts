@@ -1,9 +1,9 @@
 import { FaceMesh } from '@mediapipe/face_mesh';
 import { Camera } from '@mediapipe/camera_utils';
-import { drawLipModel } from './canvas-utils';
-import { process, lastResult } from './processor';
-import { init, updateUi } from './ui/ui-utils';
-import { estimateVowel } from './vowel-estimate';
+import { drawLipModel } from './ui/canvas-utils';
+import { process, lastResult } from './landmark-processing/processor';
+import { updateUi } from './ui/ui-utils';
+import { estimateVowel } from './landmark-processing/vowel-estimate';
 import { initCalibrationUi } from './ui/calibration-ui';
 import { initAudio } from './dsp/audio-processor';
 import './styles.css';
@@ -47,7 +47,6 @@ const camera = new Camera(videoElement, {
 
 camera.start();
 setTimeout(() => {
-    init();
     initCalibrationUi();
     initSongUi();
     initAudio();

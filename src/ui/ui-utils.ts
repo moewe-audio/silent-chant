@@ -1,5 +1,5 @@
-import { lastResult } from "../processor";
-import { RANGES, lastEstimate } from "../vowel-estimate";
+import { lastResult } from "../landmark-processing/processor";
+import { lastEstimate } from "../landmark-processing/vowel-estimate";
 
 const SCALERS = new Map<string, number>([
     ["openValue", 50],
@@ -16,14 +16,6 @@ const VOWEL_COLORS = [
     "yellow"
 ]
 
-export function init() {
-    // RANGES.forEach((range, idx) => {
-    //     addRangeIndicator("openValue", range.openRange.lower, range.openRange.upper, idx);
-    //     addRangeIndicator("stretchValue", range.stretchRange.lower, range.stretchRange.upper, idx);
-    //     addRangeIndicator("circularityRatio", range.circularityRatio.lower, range.circularityRatio.upper, idx);
-    // })
-}
-
 export function updateUi() {
     updateBar();
     updateCards();
@@ -34,6 +26,7 @@ export function updateBar() {
     updateSliderValue("stretchValue", lastResult.width);
     updateSliderValue("circularityRatio", lastResult.circularityRatio);
     updateSliderValue("vowelParam", lastEstimate.vowelParam / 4);
+    updateSliderValue("headPitchValue", lastResult.headPitch * 100, true);
 }
 
 export function updateCards() {
@@ -42,10 +35,14 @@ export function updateCards() {
     });
 }
 
-function updateSliderValue(barId: string, value: number) {
+function updateSliderValue(barId: string, value: number, vertical: boolean = false) {
     const barContainer = document.querySelector(`[data-bar-id="${barId}"]`) as HTMLElement;
-    const bar = barContainer.querySelector('.bar') as HTMLElement;
-    bar.style.width = `${value * SCALERS.get(barId)!}%`;
+    const bar = barContainer.querySelector(vertical ? '.vertical-bar' :'.bar') as HTMLElement;
+    if (!vertical){
+        bar.style.width = `${value * SCALERS.get(barId)!}%`;
+        return;
+    }
+    bar.style.height = `${value!}%`;
 }
 
 function addRangeIndicator(barId: string, min: number, max: number, vowelId: number) {

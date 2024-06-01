@@ -1,6 +1,7 @@
 import { FaustAudioWorkletNode, FaustDspMeta } from "@grame/faustwasm";
-import { lastEstimate } from "../vowel-estimate";
+import { lastEstimate } from "../landmark-processing/vowel-estimate";
 import { createFaustMonoNode } from "./faust-loader";
+import { lastResult } from "../landmark-processing/processor";
 
 class ParameterSmoother {
     private alpha: number;
@@ -24,7 +25,7 @@ class ParameterSmoother {
 
 export let audioContext: AudioContext;
 let formantParameter: number = 0.0;
-const smoothFormant = new ParameterSmoother(0, 1);
+const smoothFormant = new ParameterSmoother(0, 0.6);
 export let faustNode: {
     faustNode: FaustAudioWorkletNode<false>;
     gain: GainNode;
@@ -53,12 +54,16 @@ export async function initAudio() {
     // node.faustNode.setParamValue("/vocal/vibratoFreq", 2);
     // node.faustNode.setParamValue("/vocal/vibratoGain", 0.2);
     faustNode = {...node, gain};
-    setInterval(updateVowelSoundParam, 10);
+    setInterval(updateLiveParameters, 10);
 }
 
-function updateVowelSoundParam() {
+function updateLiveParameters() {
     formantParameter = smoothFormant.update(lastEstimate.vowelMaxScore);
     if (formantParameter >= 0 && formantParameter <= 4) {
         faustNode.faustNode.setParamValue("/vocal/vowel", formantParameter);
+    }
+    const vFreq = 7 + (lastResult.headPitch - 0.68) * 40;
+    if (vFreq >= 0 && vFreq <= 10) {
+        faustNode.faustNode.setParamValue("/vocal/vibratoFreq", vFreq);
     }
 }
