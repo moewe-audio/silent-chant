@@ -1,5 +1,5 @@
 import { ProcessingResult, lastResult } from "./processor";
-import { updateRangeIndicator } from "./ui-utils";
+import { updateRangeIndicator } from "./ui/ui-utils";
 
 export interface VowelResult {
     vowelScores: number[],

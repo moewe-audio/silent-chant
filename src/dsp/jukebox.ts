@@ -1,7 +1,14 @@
 import { Midi } from '@tonejs/midi';
-import { faustNode } from './audio-processor';
+import { audioContext, faustNode } from './audio-processor';
 
-export async function startPlayback(song: string, audioContext: AudioContext) {
+type TransportState = 'STOPPED' | 'PAUSED' | 'PLAYING';
+let transportState: TransportState = 'STOPPED';
+
+export async function startPlayback(song: string) {
+    if (transportState != 'STOPPED') {
+        await audioContext.resume();
+        return;
+    }
     await audioContext.suspend();
     const [midi, backingAudio] = await Promise.all([
         loadMIDIFile('../midi/BillieJeanVocal.mid'),
@@ -11,6 +18,12 @@ export async function startPlayback(song: string, audioContext: AudioContext) {
     playAudioBuffer(backingAudio, now, audioContext);
     playMIDIFile(audioContext, midi, now, 124);
     await audioContext.resume();
+    transportState = 'PLAYING';
+}
+
+export async function stopPlayback() {
+    await audioContext.suspend();
+    transportState = 'PAUSED';
 }
 
 export async function loadMIDIFile(url: string) {
@@ -28,7 +41,7 @@ async function playMIDIFile(context: AudioContext, midi: Midi, time: number, bpm
             const noteOnTime = time + note.time * timeFactor;
             const noteOffTime = noteOnTime + note.duration * timeFactor;
             const freqParam = faustNode.faustNode.parameters.get("/vocal/freq");
-            const gainParam = faustNode.faustNode.parameters.get("/vocal/gain");            
+            const gainParam = faustNode.faustNode.parameters.get("/vocal/gain");        
             if (freqParam && gainParam) {
                 freqParam.setValueAtTime(midiToFrequency(note.midi), noteOnTime);
                 gainParam.setValueAtTime(0, noteOnTime);

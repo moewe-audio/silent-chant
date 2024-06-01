@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -19,6 +20,13 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.group-title {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    align-self: flex-start;
+  }
+  
 
 .element {
     margin: 10px 0;
@@ -146,3 +154,39 @@ body {
 .capture-link:hover {
     background: rgba(227, 224, 224, 73%);
 }
+
+.transport-button {
+    display: inline-block;
+    padding: 5px 10px;
+    color: #ffffff;
+    font-size: larger;
+    background: #654321;
+    text-decoration: none;
+    border: none;
+    border-radius: 8.1px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 2px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.295);
+}
+
+.transport-button:hover {
+    background: rgb(71, 41, 30);
+}
+
+.track-select {
+    appearance: none;
+    background-color: #654321;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.track-select:focus {
+    outline: none; /* Ensures no outline appears on focus */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3), 0 0 5px #654321; /* Optional: adds a custom shadow to indicate focus */
+  }

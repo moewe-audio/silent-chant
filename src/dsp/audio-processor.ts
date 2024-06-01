@@ -23,13 +23,9 @@ class ParameterSmoother {
 }
 
 
-let audioContext: AudioContext;
-let voices: Map<string, Voice> = new Map();
+export let audioContext: AudioContext;
 let formantParameter: number = 0.0;
 const smoothFormant = new ParameterSmoother(0, 0.1);
-const smoothGain = new ParameterSmoother(0, 0.1);
-const formantBuffer: number[] = [];
-const formantBufferSize = 64;
 export let faustNode: {
     faustNode: FaustAudioWorkletNode<false>;
     gain: GainNode;
@@ -58,7 +54,6 @@ export async function initAudio() {
     // node.faustNode.setParamValue("/vocal/vibratoFreq", 2);
     // node.faustNode.setParamValue("/vocal/vibratoGain", 0.2);
     faustNode = {...node, gain};
-    startPlayback('BillieJean', audioContext);
     setInterval(updateVowelSoundParam, 20);
 }
 

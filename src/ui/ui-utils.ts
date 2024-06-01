@@ -1,5 +1,5 @@
-import { lastResult } from "./processor";
-import { RANGES, lastEstimate } from "./vowel-estimate";
+import { lastResult } from "../processor";
+import { RANGES, lastEstimate } from "../vowel-estimate";
 
 const SCALERS = new Map<string, number>([
     ["openValue", 50],

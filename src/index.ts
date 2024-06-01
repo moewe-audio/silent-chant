@@ -2,11 +2,12 @@ import { FaceMesh } from '@mediapipe/face_mesh';
 import { Camera } from '@mediapipe/camera_utils';
 import { drawLipModel } from './canvas-utils';
 import { process, lastResult } from './processor';
-import { init, updateUi } from './ui-utils';
-import { estimateVowel } from './vowel-estimate'
-import { initCalibrationUi } from './calibration-ui';
+import { init, updateUi } from './ui/ui-utils';
+import { estimateVowel } from './vowel-estimate';
+import { initCalibrationUi } from './ui/calibration-ui';
 import { initAudio } from './dsp/audio-processor';
 import './styles.css';
+import { initSongUi } from './ui/song-ui';
 
 const videoElement = document.getElementById('webcam') as HTMLVideoElement;
 const canvasElement = document.getElementById(
@@ -48,6 +49,7 @@ camera.start();
 setTimeout(() => {
     init();
     initCalibrationUi();
+    initSongUi();
     initAudio();
     setInterval(updateUi, 100);
     setInterval(() => drawLipModel(lastResult, canvasCtx, canvasElement), 30);
