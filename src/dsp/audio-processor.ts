@@ -1,7 +1,6 @@
 import { FaustAudioWorkletNode, FaustDspMeta } from "@grame/faustwasm";
 import { lastEstimate } from "../vowel-estimate";
 import { createFaustMonoNode } from "./faust-loader";
-import { startPlayback } from "./jukebox";
 
 class ParameterSmoother {
     private alpha: number;
@@ -25,7 +24,7 @@ class ParameterSmoother {
 
 export let audioContext: AudioContext;
 let formantParameter: number = 0.0;
-const smoothFormant = new ParameterSmoother(0, 0.1);
+const smoothFormant = new ParameterSmoother(0, 1);
 export let faustNode: {
     faustNode: FaustAudioWorkletNode<false>;
     gain: GainNode;
@@ -46,7 +45,7 @@ export async function initAudio() {
     const node = await createFaustMonoNode(audioContext, "fofMono");
     node.faustNode.start();
     node.faustNode.parameters.get("/vocal/gain")?.setValueAtTime(0, audioContext.currentTime);
-    node.faustNode.setParamValue("/vocal/voiceType", 1);
+    node.faustNode.setParamValue("/vocal/voiceType", 2);
     const gain = audioContext.createGain();
     gain.gain.setValueAtTime(0.13, audioContext.currentTime);
     node.faustNode.connect(gain);
@@ -54,7 +53,7 @@ export async function initAudio() {
     // node.faustNode.setParamValue("/vocal/vibratoFreq", 2);
     // node.faustNode.setParamValue("/vocal/vibratoGain", 0.2);
     faustNode = {...node, gain};
-    setInterval(updateVowelSoundParam, 20);
+    setInterval(updateVowelSoundParam, 10);
 }
 
 function updateVowelSoundParam() {
