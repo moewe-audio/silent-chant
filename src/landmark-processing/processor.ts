@@ -70,7 +70,6 @@ function calculateHeight(landmarks: LipLandmarks, ref: number): [number, number[
     landmarks.lipsUpperInner.forEach((up, idx) => {
         const low = landmarks.lipsLowerInner[idx];
         if (!low) return;
-        // const height = Math.abs(low.y - up.y) / ref;
         const height = distance(up, low, ref);
         heightVector[idx] = height;
         norm4 += height ** 4;
