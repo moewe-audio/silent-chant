@@ -53,8 +53,6 @@ export async function initAudio() {
     gain.gain.setValueAtTime(0.13, audioContext.currentTime);
     node.faustNode.connect(gain);
     gain.connect(audioContext.destination); 
-    // node.faustNode.setParamValue("/vocal/vibratoFreq", 2);
-    // node.faustNode.setParamValue("/vocal/vibratoGain", 0.2);
     faustNode = {...node, gain};
     setInterval(updateLiveParameters, 30);
 }
