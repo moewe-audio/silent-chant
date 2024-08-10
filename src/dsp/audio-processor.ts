@@ -26,6 +26,8 @@ class ParameterSmoother {
 export let audioContext: AudioContext;
 let formantParameter: number = 0.0;
 const smoothFormant = new ParameterSmoother(0, 0.6);
+const smoothVibrato = new ParameterSmoother(7, 0.6);
+
 export let faustNode: {
     faustNode: FaustAudioWorkletNode<false>;
     gain: GainNode;
@@ -54,15 +56,18 @@ export async function initAudio() {
     // node.faustNode.setParamValue("/vocal/vibratoFreq", 2);
     // node.faustNode.setParamValue("/vocal/vibratoGain", 0.2);
     faustNode = {...node, gain};
-    setInterval(updateLiveParameters, 10);
+    setInterval(updateLiveParameters, 30);
 }
 
 function updateLiveParameters() {
     formantParameter = smoothFormant.update(lastEstimate.vowelMaxScore);
     if (formantParameter >= 0 && formantParameter <= 4) {
         faustNode.faustNode.setParamValue("/vocal/vowel", formantParameter);
+        faustNode.faustNode.parameters.get('/vocal/vowel')?.cancelScheduledValues(0);
+        faustNode.faustNode.parameters.get('/vocal/vowel')?.setValueAtTime(formantParameter, audioContext.currentTime);
+        faustNode.faustNode.parameters.get('/vocal/vowel')?.linearRampToValueAtTime(lastEstimate.vowelMaxScore, audioContext.currentTime + 0.3);
     }
-    const vFreq = 7 + (lastResult.headPitch - 0.68) * 40;
+    const vFreq = smoothVibrato.update(7 + (lastResult.headPitch - 0.68) * 40);
     if (vFreq >= 0 && vFreq <= 10) {
         faustNode.faustNode.setParamValue("/vocal/vibratoFreq", vFreq);
     }
